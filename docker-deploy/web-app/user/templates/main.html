@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <style>
+        .navbar {
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+{% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+          {% endif %}
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> Main Page of Ride Sharing System </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/DriverReg/">Be a Driver</a></li>
+                <li><a href="/DriverEdit/">Edit Driver's info</a></li>
+                <li><a href="/RideReq/">Request a Ride</a></li>
+                <li><a href="/FindDrive/">Find a Drive</a></li>
+                <li><a href="/ViewDrive/">View Your Drive</a></li>
+                <li><a href="/Join/">Join a request</a></li>
+
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{ request.session.info.name }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/ViewInfo/">View Info</a></li>
+                        <li><a href="/EditInfo/">Edit Info</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout/">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div>
+
+</div>
+    <div class="container">
+        <div style="margin-bottom: 10px" class="clearfix">
+            <a class="btn btn-success" href="/ViewOwner/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                View your order as owner
+            </a>
+            <a class="btn btn-success" href="/ViewSharer/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                View your order as sharer
+            </a>
+
+
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Available Ride
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Owner</th>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th>Passenger Number</th>
+                    <th>Driver</th>
+                    <th>Maximum Passenger Num</th>
+                    <th>Share(s)</th>
+                    <th>Special Request</th>
+                    <th>Special Vehicle Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in orders %}
+                    <tr>
+                        <th>{{ obj.id }}</th>
+                        <td>{{ obj.owner.username }}</td>
+                        <td>{{ obj.destination }}</td>
+                        <td>{{ obj.arrival_time }}</td>
+                        <td>{{ obj.passenger_number }}</td>
+                        {% if not obj.driver %}
+                            <td>No driver picks this order!</td>
+                        {% else %}
+                            <td>{{ obj.driver.full_name }}</td>
+                        {% endif %}
+                        {% if not obj.driver %}
+                            <td>Cannot show,no driver picks this order!</td>
+                        {% else %}
+                            <td>{{ obj.driver.max_passenger }}</td>
+                        {% endif %}
+                        {% if obj.is_shared %}
+                            {% if not obj.sharer %}
+                                <td>No sharer right now!</td>
+                            {% else %}
+                                <td>
+                                {% for temp in obj.sharer.all %}
+                                    {{temp.username}}
+                                {% endfor %}
+                                </td>
+                                {% endif %}
+                        {% else %}
+                        <td>{{ obj.is_shared }}</td>
+                        {% endif %}
+                        {% if not obj.special_request %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_request }}</td>
+                        {% endif %}
+                        {% if not obj.special_vehicle_type %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_vehicle_type }}</td>
+                        {% endif %}
+                        <td>
+                            <a class="btn btn-primary btn-xs" href="/{{ obj.id }}/EditOrder/">Edit</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+
+        </div>
+
+    </div>
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

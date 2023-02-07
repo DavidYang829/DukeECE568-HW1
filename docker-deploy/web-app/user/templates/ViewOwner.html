@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+</head>
+<body>
+<a class="btn btn-primary" href={% url 'user:main'%} role="button">Back to Main Page</a>
+<div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Your order as a owner
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th>Passenger Number</th>
+                    <th>Driver</th>
+                    <th>Maximum Passenger Num</th>
+                    <th>Share(s)</th>
+                    <th>Special Request</th>
+                    <th>Special Vehicle Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in orders %}
+                    <tr>
+                        <th>{{ obj.id }}</th>
+                        <td>{{ obj.destination }}</td>
+                        <td>{{ obj.arrival_time }}</td>
+                        <td>{{ obj.passenger_number }}</td>
+                        {% if not obj.driver %}
+                            <td>No driver picks this order!</td>
+                        {% else %}
+                            <td>{{ obj.driver.full_name }}</td>
+                        {% endif %}
+                        {% if not obj.driver %}
+                            <td>Cannot show,no driver picks this order!</td>
+                        {% else %}
+                            <td>{{ obj.driver.max_passenger }}</td>
+                        {% endif %}
+                        {% if obj.is_shared %}
+                            {% if not obj.sharer %}
+                                <td>No sharer right now!</td>
+                            {% else %}
+                                <td>
+                                {% for temp in obj.sharer.all %}
+                                    {{temp.username}}
+                                {% endfor %}
+                                </td>
+                                {% endif %}
+                        {% else %}
+                        <td>{{ obj.is_shared }}</td>
+                        {% endif %}
+                        {% if not obj.special_request %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_request }}</td>
+                        {% endif %}
+                        {% if not obj.special_vehicle_type %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_vehicle_type }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+
+        </div>
+
+    </div>
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

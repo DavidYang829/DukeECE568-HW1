@@ -1,0 +1,10 @@
+1.all urls, except for welcome, login, create account pages, require user to login first. We decide to use middleware to deal with this.
+2.For a certain ride request, it may have lots of sharers. We decide to use model.ManyToMany to build the connection between sharers and request.
+3.For a certain ride request, if the user is the driver of this request, he or she cannot be the sharer. We use filter() to deal with this.
+4.For a certain ride request, if the user has already been the sharer of this request, he or she cannot join again. 
+5.If a user has already been a driver, he or she can not click the button of "Be a Driver" in the main page again.
+6.Only the owner or the sharer of a given ride request can edit this request.
+7.When a sharer join in the ride request, the passenger number of this request should be updated. 
+8.If a user it not a driver, he or she cannot search for order. 
+9.If a user has already be a driver of a given request, he or she cannot select this request again.
+10.if a user has already be the owner of a request, he or she cannot join as a sharer.

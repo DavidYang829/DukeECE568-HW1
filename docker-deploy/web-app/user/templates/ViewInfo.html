@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+</head>
+<body>
+<ul class="list-group">
+  <li class="list-group-item">User Id:{{ user.id}}</li>
+  <li class="list-group-item">Username:{{ user.username }}</li>
+  <li class="list-group-item">User Email:{{ user.email }}</li>
+  <li class="list-group-item">Sex:{{ user.sex }}</li>
+
+</ul>
+{% if user.is_driver%}
+    <ul class="list-group">
+    <li class="list-group-item">Full Name:{{ user.full_name}}</li>
+    <li class="list-group-item">Type of Vehicle:{{ user.vehicle_type}}</li>
+    <li class="list-group-item">plate Number:{{ user.plate_num}}</li>
+    <li class="list-group-item">Maximum of Passengers:{{ user.max_passenger}}</li>
+    <li class="list-group-item">Special Vehicle Info:{{ user.special_vehicle_info}}</li>
+
+
+    </ul>
+{% else %}
+    <a class="btn btn-primary" href={% url 'user:DriverReg'%} role="button">Want to be a new driver?</a>
+{% endif %}
+
+<a class="btn btn-primary" href={% url 'user:main'%} role="button">Back to Main Page</a>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>David Y ride sharing system</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+
+  </head>
+  <body>
+  <div class="jumbotron">
+  <h1>Welcome to the mini ride sharing system!</h1>
+  <p>Designed by David and Joey, Durham.</p>
+      <p>Now login to your own account!</p>
+  <p><a class="btn btn-primary btn-lg" href={% url 'user:login'%} role="button">Login</a></p>
+  </div>
+  </body>
+</html>

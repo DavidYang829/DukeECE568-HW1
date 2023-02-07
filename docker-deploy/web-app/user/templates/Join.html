@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+
+    <title>Join</title>
+</head>
+<body>
+<h1>Join a Request</h1>
+<div class="container">
+    <div class="panel-body">
+        <form class="form-driver" action="/Join/" method="post">
+
+          {% csrf_token %}
+          {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+          {% endif %}
+
+          <h3 class="text-center">Now join a ride!</h3>
+
+          <div class="form-group">
+              {{ SearchFrom.destination.label_tag }}
+              {{ SearchFrom.destination}}
+          </div>
+          <div class="form-group">
+              {{ SearchFrom.earliest_time.label_tag }}
+              {{ SearchFrom.earliest_time }}
+          </div>
+          <div class="form-group">
+              {{ SearchFrom.latest_time.label_tag }}
+              {{ SearchFrom.latest_time }}
+          </div>
+          <div class="form-group">
+              {{ SearchFrom.passenger_number.label_tag }}
+              {{ SearchFrom.passenger_number }}
+          </div>
+
+
+          <div>
+              <button type="submit" class="btn btn-primary float-right">Search</button>
+
+          </div>
+        </form>
+        <a class="btn btn-primary" href={% url 'user:main'%} role="button">Back to Main Page</a>
+    </div>
+</div> <!-- /container -->
+
+
+</body>
+</html>

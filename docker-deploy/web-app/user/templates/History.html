@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find a Drive</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <style>
+        .navbar {
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                All available requests
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Owner</th>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th>Passenger Number</th>
+                    <th>Share Or Not</th>
+                    <th>Special Request</th>
+                    <th>Special Vehicle Type</th>
+                    <th>Completed or Not</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in orders %}
+                    <tr>
+                        <th>{{ obj.id }}</th>
+                        <td>{{ obj.owner.username }}</td>
+                        <td>{{ obj.destination }}</td>
+                        <td>{{ obj.arrival_time }}</td>
+                        <td>{{ obj.passenger_number }}</td>
+                        <td>{{ obj.is_shared }}</td>
+                        {% if not obj.special_request %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_request }}</td>
+                        {% endif %}
+                        {% if not obj.special_vehicle_type %}
+                            <td>No</td>
+                        {% else %}
+                            <td>{{ obj.special_vehicle_type }}</td>
+                        {% endif %}
+                        <td>{{ obj.completed }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+
+        </div>
+
+    </div>
+<a class="btn btn-primary" href={% url 'user:main'%} role="button">Back to Main Page</a>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
